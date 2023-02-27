@@ -1,0 +1,270 @@
+
+/* body will cover the entire page */
+body {
+    font-family: "Verdana", sans-serif;
+    background-repeat: no-repeat;
+    background-image: url(images/fantasy_bridge.jpg);
+    background-position: top;
+    background-size: cover;
+    color: #000000;
+}
+
+#wrap {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* h tags */
+h1 {
+    color: #000000;
+    text-align: center;
+    font-size: 28px;
+    font-family: "Times New Roman", serif;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+h3 {
+    font-size: 13.5px;
+    font-weight: normal;
+}
+
+/* paragraph tag */
+p {
+    font-size: 14px;
+}
+
+/* navigation tag */
+nav {
+    background-color: rgba(255, 255, 255, 0.342);
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    padding: 20px;
+}
+
+/* unordered list within the nav tag */
+nav ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* list within the unordered list, and nav tags */
+nav ul li {
+    list-style: none;
+    padding: 10px 0;
+}
+
+/* link within the list, unordered list, and nav tags */
+nav ul li a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* section */
+section {
+    background-color: rgba(255, 255, 255, 0.342);
+    border: 1px solid #969696;
+    padding: 5px 20px 5px 20px;
+    margin: 5px 0;
+}
+
+/* img within the section */
+section img {
+    width: 100%;
+}
+
+/* aboutUs id */
+#aboutUs {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+/* hide the map on mobile */
+.map {
+    display: none;
+}
+
+/* select dropdown */
+select {
+    border-radius: 22px;
+    text-align: center;
+    padding: 5px;
+}
+
+/* light up on mouse hover */
+option:hover {
+    background-color: cyan;
+}
+
+/* make a grid, one column on mobile */
+.grid-container {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 10px;
+}
+
+/* individual items in the grid */
+.grid-item {
+    background-color: #fff;
+    border-radius: 15px;
+    border: 1px solid #969696;
+    margin: 5px;
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* img in the grid item */
+.grid-item img {
+    width: 100%;
+}
+
+/* personalize button visually */
+.button {
+    border-radius: 8px;
+    transition-duration: 0.4s;
+    margin-left: 1px;
+    margin-right: 1px;
+    font-size: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+/* textarea */
+p textarea {
+    vertical-align: top;
+    font-family: "Verdana", sans-serif;
+}
+
+/* footer tags */
+footer {
+    background-color: #000000;
+    color: white;
+    height: 127px;
+    border-radius: 8px;
+}
+
+/* img within footer */
+footer img {
+    margin-top: 5px;
+    width: 25%;
+}
+
+/* ul within footer */
+footer ul {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 35px;
+    text-align: center;
+    float: right;
+}
+
+/* li within ul within footer */
+footer ul li {
+    list-style: none;
+    padding: 2px 0;
+}
+
+/* a tag within li within ul within footer */
+footer ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* fieldset tag */
+fieldset {
+    line-height: 1.6;
+    background-color: rgba(255, 255, 255, 0.342);
+}
+
+/* making the visuals look different when on desktop */
+@media screen and (min-width: 480px) {
+
+    /* grid change to 4 columns */
+    .grid-container {
+        grid-template-columns: auto auto auto auto;
+    }
+
+    /* change the font size of h tags */
+    h1 {
+        font-size: 38px;
+    }
+
+    h3 {
+        font-size: 17px;
+    }
+
+    /* change nav to one line */
+    nav ul li {
+        display: inline;
+        padding: 0 2%;
+    }
+    
+    /* button class */
+    .button {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+    
+    /* hovering over a button */
+    .button:hover {
+        background-color: #40d5fa;
+        color: rgb(0, 0, 0);
+    }
+
+    /* section tags */
+    section {
+        background-color: rgba(255, 255, 255, 0.342);
+        margin-top: 5px;
+        width: 45%;
+        float: right;
+    }
+
+    section:last-child {
+        float: left;
+    }
+
+    /* hide forest img */
+    section p img {
+        display: none;
+    }
+
+    /* unhiding the map */
+    .map {
+        display: block;
+    }
+
+    #aboutUs {
+        padding: 5.6px 12px 10px 12px;
+        border: 2px;
+        margin: 0 2px 0 2px;
+    }
+
+    /* footer tags */
+    footer {
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.733);
+    }
+
+    footer img {
+        width: 7%;
+    }
+
+    footer ul {
+        text-align: right;
+        margin-top: 12px;
+        padding-top: 0;
+        padding-bottom: 8px;
+    }
+
+}

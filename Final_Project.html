@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Store Selling Medieval Weaponry">
+        <meta name="author" content="Marika Mulder">
+        <title>Marika's Medieval Weaponry</title>
+    </head>
+    <body>
+        <div id="wrap">
+            <header>
+                <h1>Marika's Medieval Weaponry</h1>
+                <nav>
+                    <ul>
+                        <li><a href="Final_Project.html">Home</a></li>
+                        <li><a href="#aboutUs">About Us</a></li>
+                        <li><a href="#catagories">Categories</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <br>
+
+            <fieldset id="aboutUs">
+                <section>
+                    <p><img src="images/fantasy_bridge.jpg" alt="a pic of a bridge" /></p>
+                    <h2>About Marika's Medieval Weaponry</h2>
+                    <h3>From bows to battle axes, magical to mundane, this shop offers a wide variety of weapons.  On top of that, Elvered Town is a port town with three different docks, which gives us the opportunity to ship to you!  No need to go out of your way to come here, just choose a port nearby for your items to be shipped to, and pick them up when they arrive.</h3>
+                    <h3>In the Cloud Gate district of Elvered Town, this shop is easily visible from the main West road. Look for a two-storey half-timbered building, with a black tile roof and a smooth stone floor.  It is well lit by glowing gemstones hanging from the ceiling and has several chimneys.</h3>
+                    <h3>The Cloud Gate district sees many adventurers come and go, so it is filled with cheap inns, and taverns.  There are also some <em>'shops'</em>  that adventurers should be wary of, or risk spending money on worthless and fake items.</h3>
+                    <h3>Beside the Cloud Gate district is the Copper Ferry district, which is home to most of the towns farmers, and many less fortunate peasents.  It is advised to stick to the main West road if you intend to go further in the town.  This road will take you straight to the Town Square.</h3>
+                </section>
+                <section class="map">
+                    <div><img src="images/elvered_town.png" alt="Map of Elvered" /></div>
+                </section>
+            </fieldset>
+
+            <br>
+
+            <fieldset id="catagories"> <legend><strong>Weapons</strong></legend>
+                <select id="displayFilter" onchange="displayWeapons();">
+                    <option selected>All</option>
+                    <option>Axe</option>
+                    <option>Bow</option>
+                    <option>Dagger</option>
+                    <option>Bundle</option>
+                </select>
+            <span style="float: right;">
+                Currency: 
+                <select id="currencySelector" onchange="changeCurrency();">
+                    <option selected value="CAD">CAD</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+            </span>
+            <br>
+            <span id="dateArea" style="float: right;" >Date/Time:</span>
+            <br>
+            </fieldset>
+
+            <div class="grid-container" id="inventoryOutput"></div>
+
+            <br>
+
+            <fieldset> <legend><strong>Choose Your Weapons</strong></legend>
+                <p>
+                    Weapon ID: <input type="text" id="addItemId" />
+                    &nbsp;
+                    <span id="addIDValidationMessage"></span>
+                </p>
+                <p>
+                    Quantity: <input type="number" id="addItemQty" />
+                    &nbsp;
+                    <span id="addQtyValidationMessage"></span>
+                </p>
+                <p>
+                    <input class="button" type="button" value="Weapon Details" onclick="details();"/>
+                    <input class="button" type="button" value="Add to Weaponry" onclick="addToCart();"/>
+                    <input class="button" type="button" value="Remove from Weaponry" onclick="removeFromCart();"/>
+                </p>
+            </fieldset>
+
+            <br>
+
+            <fieldset> <legend><strong>Your Weaponry</strong></legend>
+                <span><strong>| ID | Price | Quantity | Subtotal |</strong></span>
+                <br>
+                <div id="cartOutput"></div>
+                <br> <hr> <br>
+                <div id="cartCheckout"></div>
+            </fieldset>
+
+            <br>
+
+            <fieldset> <legend><strong>Review a weapon</strong></legend>
+                <p>Weapon ID: <input type="text" id="reviewId" /></p>
+                <p >Review: <textarea  type="text" id="reviewDesc"></textarea></p>
+                <p><input class="button" type="button" value="Submit Review" onclick="reviewItem();"/></p>
+            </fieldset>
+
+            <br>
+
+            <footer>
+                <img src="images/coat-of-arms.png" alt="Coat of arms"/>
+                <ul>
+                    <li><a href="mailto:marikamulder@gmail.com">Magic Mirrior Contact</a></li>
+                    <li><a href="mailto:marikamulder@gmail.com">Crystal Ball Contact</a></li>
+                    <li><a href="Final_Project.html">Back to top</a></li>
+                </ul>
+            </footer>
+        </div>
+
+        <!-- Javascript -->
+        <script>
+
+            // Weapon constructor
+			function Weapon(id, name, price, quantity, max, catagory, shipping, reviews, description, image)
+			{
+				this.id = id;                       //String – the id for the product
+				this.name = name;                   //String – the name of the product
+				this.price = price;                 //Number – the price of the item
+				this.quantity = quantity;           //Number – total amount of item available
+				this.max = max;                     //Number – max quantity allowed in cart
+                this.catagory = catagory;           //String – the category of the Item
+                this.shipping = shipping;           //Number – the cost of shipping
+                this.reviews = reviews;             //Array – containing some reviews (strings)
+                this.description = description;     //String – the description of the product
+                this.image = image;                 //String – link to the image file
+
+			}
+
+            //Cart constructor
+            function Cart(id, price, quantity, shipping) 
+            {
+                this.id = id;               //String – the id for the product
+                this.price = price;         //Float – the price of the item
+                this.quantity = quantity;   //Int – the amount of this product in the cart
+                this.shipping = shipping;   //Float – cost of shipping for this item
+            }
+
+			// Global array
+			var weaponInfo = [];
+            var cartInfo = [];
+
+            // Global Variables
+            var currency = "(CAD) $";
+            var currencyWorth = 1;
+            
+            // Call on start up
+            initialize();
+
+            /*
+                Creates the current date/time.
+                Adds items to the weaponInfo array.
+                Calls the displayWeapons and displayCart functions.
+            */
+            function initialize() {
+
+                // Find the current date and time and output it
+                var date = document.getElementById("dateArea");
+                date.innerHTML = "";
+                var d = new Date();
+                var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                date.innerHTML = "Date/Time: " + month[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " " + d.getHours() + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2); 
+            
+                    // Create some Weapons
+                //               	Weapon(id, name, price, quantity, max, catagory, shipping, reviews, description, image)
+                weaponInfo.push( new Weapon("AX01", "Dragon Scaled Axe", 19.59, 12, 3, "Axe", 30, ["I love that the scales are harvested humanly, magical creatures and inteligent being."], "With durable magic repelling dragon scales, this axe is perfect in a battle against any magic weilder. \n(Dragon scales were harvested humanely.)", "images/axe-1.png") );
+                weaponInfo.push( new Weapon("AX02", "Snakewood Bronze Axe", 19.98, 9, 3, "Axe", 30, ["Axes are not weapons for stealth, otherwise great item."], "With a burnished bronze blade this axe fits many hunters looking for a weapon that can blend in with their surroundings.", "images/axe-2.png") );
+                weaponInfo.push( new Weapon("AX03", "Nightmere Carved Axe", 22.56, 4, 1, "Axe", 30, ["Would love if they had an option to offer enchantments, all the places I found that offered enchantments tried to steal the axe."], "Double edged axe made from the enchantable ore Nightmere. \n(Axes sold individually.)", "images/axe-3.png") );
+                weaponInfo.push( new Weapon("AX04", "Silver Battle Axe", 19.95, 18, 6, "Axe", 30, ["Rock on."], "This axe is designed for the hardcore rock lovers who want to rock out on the battlefield.", "images/axe-4.png") );
+                weaponInfo.push( new Weapon("BO01", "Devilswood Recurve bow", 23.78, 21, 8, "Bow", 25, ["My teacher was not impressed, though nothing impresses him."], "Even the harshest bow critic will be imprested by the clean, elegant curves on this bow.", "images/bow-1.png") );
+                weaponInfo.push( new Weapon("BO02", "Redwood Crossbow", 28.35, 17, 5, "Bow", 25, ["Safety latch failed, lost a finger."], "Incredibly simple to use, this mechanical wonder packs a deadly blow to all those before it. \n(Includes safety latch.)", "images/bow-2.png") );
+                weaponInfo.push( new Weapon("BO03", "Silver Birch Bow", 13.95, 32, 12, "Bow", 25, ["It's cheaper to get your students to make their own bow."], "This small durable bow is perfect for any archer just starting to shoot. \n(Arrow not included.)", "images/bow-3.png") );
+                weaponInfo.push( new Weapon("BO04", "Hickory Longbow", 19.65, 28, 12, "Bow", 25, ["Weapons are not beautiful, they are useful.", "This is the most beautiful bow I have ever seen."], "64 inches long, this longbow is a stunning blend of durability, beauty, and performance. \n(Arrow not included.)", "images/bow-4.png") );
+                weaponInfo.push( new Weapon("DA01", "Akrum Dagger", 14.78, 29, 10, "Dagger", 20, ["You are less likely to be attacked when looking for enchantments for this dagger then the Nightmere axe."], "Akrum is an enchantable ore more common then Nightmere ore, but holds only one maybe two enchantments.", "images/dagger-1.png") );
+                weaponInfo.push( new Weapon("DA02", "Steel Jeweled Dagger", 19.56, 21, 8, "Dagger", 20, ["Injury was still possible through shear force."], "Adorn with two priceless jewels on its pommel, and painstakely carved designs all across its hilt. This bedazzled dagger is perfect for little princes and young lords.  \n(Dagger is blunted)", "images/dagger-2.png") );
+                weaponInfo.push( new Weapon("DA03", "Suthite Dagger", 11.68, 14, 9, "Dagger", 20, ["A solid tool, what more is there to say?"], "A simple dagger made from suthite dug by dwarves in the mines of Pesh. A basic tool in any adventurers weaponry.", "images/dagger-3.png") );
+                weaponInfo.push( new Weapon("DA04", "Leather Bound Silver Dagger", 13.45, 16, 7, "Dagger", 20, ["I followed everyone that bought this and none of them were assassins, very disappointing."], "With no cross-guard this dagger fits many an assassin stalking their prey.", "images/dagger-4.png") );
+                weaponInfo.push( new Weapon("BU01", "Longsword Element Bundle", 42.69, 10, 2, "Bundle", 35, ["Figure out which element you favor and then get three friends to buy this together."], "Unsure which element you lean towards? This bundle lets you get 4 different magic imbued longswords.  \n(Includes water, plant, fire, and poison imbued longswords.)", "images/bundle-1.png") );
+                weaponInfo.push( new Weapon("BU02", "Steel Knight Bundle", 39.56, 15, 3, "Bundle", 35, ["Shield comes without insignia on it, go to your local blacksmith for your nations insignia."], "This bundle will help you figure out if you wield an axe, mace, or sword and shield. A must have for any great up and coming new knights.", "images/bundle-2.png") );
+                weaponInfo.push( new Weapon("BU03", "Two Handed Staff Bundle", 63.99, 6, 2, "Bundle", 35, ["Magic students graduate by making their own magical focus, How dare you try and break this sacred tradition!"], "For the magic teachers among us this bundle is the ideal gift for your graduating students.", "images/bundle-3.png") );
+                weaponInfo.push( new Weapon("BU04", "Bow, Quiver, and Arrows Bundle", 33.59, 23, 4, "Bundle", 35, ["Next maybe include an instruction book on making arrows, restringing a bow, and other bow maintenance."], "This bundle covers a wide range of items for the average archer starting out.  Comes with a basic recurve bow, a dozen arrows, leather quiver with adjustable strap, and 1 replacement string.", "images/bundle-4.png") );
+
+                displayWeapons();
+                displayCart();
+            }
+
+            /*
+                Displays the weapons after checking which catagory was chosen.
+            */
+            function displayWeapons(weapons) {
+
+                // Finding out which catagory was chosen and outputting only those items
+                if (!weapons) {
+                    var selectedCatagory = document.getElementById("displayFilter").value;
+
+					// Array of filtered weapons
+					var weaponsFiltered = [];
+
+					// Loop through our weapons to find the weapons with the same catagory
+					var index = 0;
+					while(index < weaponInfo.length) {
+
+						// If the catagory matched, pass it to the array
+						if (weaponInfo[index].catagory == selectedCatagory)
+						{
+							weaponsFiltered.push(weaponInfo[index]);
+						}
+
+						if (selectedCatagory == "All") {
+							weaponsFiltered.push(weaponInfo[index]);
+						}
+						
+						index++;
+					} // end while
+					
+					weapons = weaponsFiltered;
+                } // end if
+
+                // Get the div reference
+				var weaponDiv = document.getElementById("inventoryOutput");
+                weaponDiv.innerHTML = "";
+
+					for (var index = 0; index < weapons.length; index++) {
+
+						// Create a div for each weapon
+						var tempDiv = document.createElement("div");
+                        tempDiv.className = "grid-item";
+
+						// Image
+						var tempImage = document.createElement("IMG");
+                        tempImage.setAttribute("src", weapons[index].image);
+                        tempImage.setAttribute("alt", weapons[index].id);
+						tempDiv.appendChild(tempImage);
+
+						// Id
+						var tempId = document.createElement("h");
+						tempId.innerHTML = "Weapon ID: " + weapons[index].id + "<br>";
+						tempDiv.appendChild(tempId);
+
+						// Name
+						var tempName = document.createElement("strong");
+						tempName.innerHTML =  weapons[index].name + "<br>";
+						tempDiv.appendChild(tempName);
+
+						// Price
+						var tempPrice = document.createElement("h");
+                        var itemPrice = weapons[index].price * currencyWorth;
+						tempPrice.innerHTML = "Price: " + currency + itemPrice.toFixed(2) + "<br>";
+						tempDiv.appendChild(tempPrice);
+
+						// Quantity
+						var tempQuantity = document.createElement("h");
+						tempQuantity.innerHTML = "Items Available: " + weapons[index].quantity + "<br>";
+						tempDiv.appendChild(tempQuantity);
+
+                        // Max
+						var tempMax = document.createElement("h");
+						tempMax.innerHTML = "Max Items Per Person: " + weapons[index].max + "<br>";
+						tempDiv.appendChild(tempMax);
+
+						weaponDiv.appendChild(tempDiv);
+					}// end for
+
+            }
+
+            /*
+                Displays the items in the cart/weaponry.
+            */
+            function displayCart() {
+
+                // Get the div reference
+                var cartDiv = document.getElementById("cartOutput");
+                cartDiv.innerHTML = "";
+                
+                // Find if there is items in cart
+                if (cartInfo.length == 0) {
+                    cartDiv.innerHTML = "No Items in Cart";
+                }
+                else {
+                    for (var index = 0; index < cartInfo.length; index++) {
+
+                        // Create a div for each item in cart
+                        var tempDiv = document.createElement("div");
+
+                        // Id
+						var tempId = document.createElement("h");
+						tempId.innerHTML = " | " + cartInfo[index].id + " | ";
+						tempDiv.appendChild(tempId);
+
+						// Price
+						var tempPrice = document.createElement("h");
+                        var itemPrice = cartInfo[index].price * currencyWorth;
+						tempPrice.innerHTML = currency + itemPrice.toFixed(2) + " | ";
+						tempDiv.appendChild(tempPrice);
+
+                        // Quantity
+						var tempQuantity = document.createElement("h");
+						tempQuantity.innerHTML = cartInfo[index].quantity + " | ";
+						tempDiv.appendChild(tempQuantity);
+
+                        // Subtotal
+						var tempSubtotal = document.createElement("h");
+                        var itemSubtotal = cartInfo[index].quantity * cartInfo[index].price * currencyWorth;
+						tempSubtotal.innerHTML = currency + itemSubtotal.toFixed(2) + " | ";
+						tempDiv.appendChild(tempSubtotal);
+
+                        cartDiv.appendChild(tempDiv);
+                    } //End for
+                } //End if
+
+                calculateTotal();
+            }
+
+            /*
+                Calculate the item subtotal, shipping, subtotal, tax, 
+                and final order total of all the items in cart/weaponry.
+            */
+            function calculateTotal() {
+
+                // Get the div reference
+                var totalDiv = document.getElementById("cartCheckout");
+                totalDiv.innerHTML = "";
+
+                // Make all numbers able to add together
+                var itemSubtotal = 0;
+                itemSubtotal = parseFloat(itemSubtotal);
+                var shipping = 0;
+                shipping = parseFloat(shipping);
+                var subTotal = 0;
+                subTotal = parseFloat(subTotal);
+                var tax = 0;
+                tax = parseFloat(tax);
+                var total = 0;
+                total = parseFloat(total);
+
+                // Look through the cart and find the items subtotal and shipping
+                for (var index = 0; index < cartInfo.length; index++) {
+                    itemSubtotal += cartInfo[index].quantity * cartInfo[index].price * currencyWorth;
+                    shipping += cartInfo[index].shipping * currencyWorth;
+                }
+
+                // Create a div for the price of the items to be checked out
+                var tempDiv = document.createElement("div");
+
+                    // Item Subtotal
+					var tempItemSubtotal = document.createElement("h");
+					tempItemSubtotal.innerHTML = "Item Subtotal: " + currency + itemSubtotal.toFixed(2) + "<br>";
+					tempDiv.appendChild(tempItemSubtotal);
+
+					// Shipping
+					var tempShipping = document.createElement("h");
+					tempShipping.innerHTML = "Estimated Shipping: " + currency  + shipping.toFixed(2) + "<br> <br>";
+					tempDiv.appendChild(tempShipping);
+
+                    // Subtotal
+                    var subtotal = itemSubtotal + shipping
+					var tempSubtotal = document.createElement("h");
+					tempSubtotal.innerHTML = "Subtotal: "  + currency  + subtotal.toFixed(2) + "<br>";
+					tempDiv.appendChild(tempSubtotal);
+
+                    // Estimated Tax
+                    var tax = subtotal * 0.13
+					var tempEstimatedTax = document.createElement("h");
+					tempEstimatedTax.innerHTML = "Estimated Tax: "  + currency  + tax.toFixed(2) + "<br>";
+					tempDiv.appendChild(tempEstimatedTax);
+
+                    // Order Total
+                    var total = tax + subtotal
+					var tempTotal = document.createElement("h");
+					tempTotal.innerHTML = "Order Total: "  + currency  + total.toFixed(2) + "<br>";
+					tempDiv.appendChild(tempTotal);
+
+                totalDiv.appendChild(tempDiv);
+                
+            }
+        
+            /*
+                Checks which currency was chosen and calculates the price difference.
+            */
+            function changeCurrency() {
+
+                // Gets the selected currency
+                var selectedCurrency = document.getElementById("currencySelector").value;
+
+                // Sets the price difference
+                var usdWorth = 0.79;
+                var eurWorth = 0.69;
+
+                // Find which currency was chosen and calculate
+                if (selectedCurrency == "CAD") {
+                    currencyWorth = 1;
+                    currency = "(CAD) $"
+                }
+
+                if (selectedCurrency == "USD") {
+                    currencyWorth = usdWorth;
+                    currency = "(USD) $"
+                }
+
+                if (selectedCurrency == "EUR") {
+                    currencyWorth = eurWorth;
+                    currency = "(EUR) €"
+                }
+                
+                // Updates prices on the website
+                displayWeapons();
+                displayCart();
+            }
+
+            /*
+                Add items to cart/weaponry.
+                Check if the item exists.
+                Make sure they cannot go over the max items per person.
+            */
+            function addToCart() {
+                
+                // Get the id and quantity wanted
+                var itemId = document.getElementById("addItemId").value;
+                var qty = document.getElementById("addItemQty").value;
+
+                // Make the quantity a number
+                qty = parseInt(qty);
+
+                // Variable to hold infomation of which item chosen
+                var cartItem = null;
+                
+                // Compare the chosen id to the items available
+                for (var index = 0; index < weaponInfo.length; index++) {
+
+                    if(itemId == weaponInfo[index].id) {
+
+                        cartItem = index
+                    }
+                }
+
+                // If the id does not exist send an alert
+                if (cartItem == null) {
+                    alert("That id does not exist!  Please enter a valid id.")
+                }
+
+                // Check that the quantity input is not blank
+                if (isNaN(qty)) {
+                    qty = 0;
+                }
+
+                // Check that the quantity is not less then 1
+                if (qty <= 0) {
+                    alert("You must enter a valid quantity.")
+                } // Check that they do not exceed the max allowed per person
+                else if (qty > weaponInfo[cartItem].max) {
+                    alert("You cannot exceed the max items per person.")
+                }
+                else {
+
+                    // Variable for if item is in the cart/weaponry or not
+                    var inCart = false;
+
+                    for (var index = 0; index < cartInfo.length; index++) {
+
+                        // Chack if there is already an item in cart/weaponry with the same id and just update quantity
+                        if (weaponInfo[cartItem].id == cartInfo[index].id) {
+
+                            // If adding more item causes it to go over the max per person only add enough to get the max
+                            if (weaponInfo[cartItem].max < cartInfo[index].quantity + qty) {   
+                                cartInfo[index].quantity = weaponInfo[cartItem].max
+                                alert("You cannot exceed the max items per person. \n The max amount has been added to cart.")
+                            }
+                            else { // Add quantity to cart and take away quantity from available items
+                                cartInfo[index].quantity += qty;
+                                weaponInfo[cartItem].quantity -= qty;
+                            }
+                            
+                            // Item is in cart so it will skip if statement to add a new item
+                            inCart = true;
+                        }
+                    }
+
+                    // Item is not in cart/weaponry so create a new item
+                    if (!inCart) {
+
+                        cartInfo.push(new Cart(weaponInfo[cartItem].id, weaponInfo[cartItem].price, qty, weaponInfo[cartItem].shipping));
+                        weaponInfo[cartItem].quantity -= qty;
+                    }
+                }
+
+                // Update cart/weaponry and available weapons
+                displayCart();
+                displayWeapons();
+            }
+
+            /*
+                Removes items from cart/weaponry.
+                Check if the item exists.
+            */
+            function removeFromCart() {
+                
+                // Get the id and quantity wanted
+                var removeItemId = document.getElementById("addItemId").value;
+                var removeQty = document.getElementById("addItemQty").value;
+
+                // Make the quantity a number
+                removeQty = parseInt(removeQty);
+
+                // Variable to hold infomation of which item chosen
+                var removeCartItem = null;
+
+                // Compare the chosen id to the items available
+                for (var index = 0; index < cartInfo.length; index++) {
+
+                    if(removeItemId == cartInfo[index].id) {
+
+                        removeCartItem = index
+                    }
+                }
+
+                // Check that the quantity is not less then 1
+                if (removeQty <= 0) {
+                    alert("You must enter a valid quantity.")
+                }
+
+                // If the id does not exist send an alert
+                if (removeCartItem == null) {
+                    alert("That id does not exist in your Weaponry!  Please enter a valid id.")
+                }
+                else {
+                    // Quantity is more then in cart, remove entire item
+                    if(removeQty >= cartInfo[removeCartItem].quantity) {
+                        weaponInfo.quantity += cartInfo[removeCartItem].quantity;
+                        cartInfo.splice(removeCartItem, 1);
+                    }// Remove the wanted quantity
+                    else if (removeQty <= cartInfo[removeCartItem].quantity) {
+                        cartInfo[removeCartItem].quantity -= removeQty;
+                        weaponInfo[removeCartItem].quantity += removeQty;
+                    }
+                }
+
+                // Update cart/weaponry and available weapons
+                displayCart();
+                displayWeapons();
+            }
+
+            /*
+                Pops up details on selected item
+            */
+            function details() {
+
+                // Get the id of item wanted
+                var detailsItemId = document.getElementById("addItemId").value;
+
+                // Variable to hold infomation of which item chosen
+                var detailItem = null;
+
+                // Compare the chosen id to the items available
+                for (var index = 0; index < weaponInfo.length; index++) {
+
+                    if(detailsItemId == weaponInfo[index].id) {
+
+                        detailItem = index
+                    }
+                }
+
+                // Output details in an alert
+                var detailPrice = weaponInfo[detailItem].price * currencyWorth;
+                alert(
+                    "Weapon ID: " + weaponInfo[detailItem].id + "\n" +
+                    weaponInfo[detailItem].name + "\n" +
+                    "Price: " + currency + detailPrice.toFixed(2) + "\n" +
+                    "Items Available: " + weaponInfo[detailItem].quantity + "\n" +
+                    "Max Items Per Person: " + weaponInfo[detailItem].max + "\n" +
+                    "Shipping: " + currency + weaponInfo[detailItem].shipping.toFixed(2) + "\n \n" +
+                    "Desciption: \n" + weaponInfo[detailItem].description + "\n" + "\n" +
+                    "Reviews: \n-- " + weaponInfo[detailItem].reviews.join("\n")
+                
+                );
+
+            }
+
+            /*
+                Allows a review to be submitted to an item
+            */
+            function reviewItem() {
+
+                // Get the id of the item, and the review that is being submitted
+                var reviewItemId = document.getElementById("reviewId").value;
+                var reviewByUser = document.getElementById("reviewDesc").value;
+                
+                // Variable to hold infomation of which item chosen
+                var userReview = null;
+
+                // Compare the chosen id to the items available
+                for (var index = 0; index < weaponInfo.length; index++) {
+
+                    if( reviewItemId == weaponInfo[index].id) {
+
+                        userReview = index
+                    }
+                }
+
+                // Add review to the item
+                weaponInfo[userReview].reviews.push("-- " + reviewByUser);
+
+            }
+
+        </script>
+    </body>
+</html>
