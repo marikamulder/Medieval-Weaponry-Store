@@ -7,15 +7,22 @@
 body {
     font-family: "Verdana", sans-serif;
     background-repeat: no-repeat;
-    background-image: url(images/fantasy_bridge.jpg);
+    background-image: url(images/green-pattern.jpg);
     background-position: top;
     background-size: cover;
     color: #000000;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #wrap {
     max-width: 100%;
     margin: 0 auto;
+}
+
+header {
+    margin-left: -20px;
+    margin-right: -20px;
 }
 
 /* h tags */
@@ -108,8 +115,10 @@ option:hover {
 
 /* make a grid, one column on mobile */
 .grid-container {
-    display: grid;
-    grid-template-columns: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     padding: 10px;
 }
 
@@ -123,6 +132,11 @@ option:hover {
     font-size: 16px;
     text-align: center;
     line-height: 1.6;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 250px;
+    justify-content: flex-end;
 }
 
 /* img in the grid item */
@@ -154,12 +168,16 @@ footer {
     color: white;
     height: 127px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 /* img within footer */
 footer img {
     margin-top: 5px;
-    width: 25%;
+    width: auto;
+    height: auto;
 }
 
 /* ul within footer */
@@ -168,7 +186,8 @@ footer ul {
     padding-bottom: 8px;
     padding-right: 35px;
     text-align: center;
-    float: right;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 /* li within ul within footer */
@@ -181,7 +200,7 @@ footer ul li {
 footer ul li a {
     color: white;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 /* fieldset tag */
@@ -232,11 +251,15 @@ fieldset {
         background-color: rgba(255, 255, 255, 0.342);
         margin-top: 5px;
         width: 45%;
-        float: right;
+        order: 1;
     }
 
     section:last-child {
-        float: left;
+        order: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 
     /* hide forest img */
@@ -250,6 +273,8 @@ fieldset {
     }
 
     #aboutUs {
+        display: flex;
+        flex-direction: row;
         padding: 5.6px 12px 10px 12px;
         border: 2px;
         margin: 0 2px 0 2px;
@@ -257,12 +282,8 @@ fieldset {
 
     /* footer tags */
     footer {
-        height: auto;
+        height: 105px;
         background-color: rgba(0, 0, 0, 0.733);
-    }
-
-    footer img {
-        width: 7%;
     }
 
     footer ul {
@@ -272,4 +293,50 @@ fieldset {
         padding-bottom: 8px;
     }
 
+    footer ul li a {
+        font-size: 18px;
+    }
+
+}
+
+
+@media screen and (min-width: 480px) and (max-width: 750px) {
+
+    #aboutUs {
+        display: flex;
+        flex-direction: column;
+    }
+
+    section {
+        width: auto;
+    }
+
+    .map {
+        padding: 15px 30px;
+    }
+}
+
+
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+
+    #aboutUs {
+        display: flex;
+        flex-direction: column;
+    }
+
+    section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: auto;
+    }
+
+    .map {
+        padding: 15px 120px;
+    }
+
+    .textAbout {
+        margin-left: 15px;
+        align-self: flex-end;
+    }
 }
