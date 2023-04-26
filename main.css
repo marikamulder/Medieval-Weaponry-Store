@@ -139,6 +139,7 @@ option:hover {
 
 /* textarea */
 p textarea {
+    height: 50px;
     vertical-align: top;
     font-family: "Verdana", sans-serif;
 }
@@ -182,7 +183,7 @@ footer ul li a {
 /* fieldset tag */
 fieldset {
     line-height: 1.6;
-    background-color: rgba(255, 255, 255, 0.342);
+    background-color: rgba(255, 255, 255, 0.67);
 }
 
 /* making the visuals look different when on desktop */
