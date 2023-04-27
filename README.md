@@ -20,18 +20,20 @@ You can see the items in your cart within the "Your Weaponry" section. You can s
 
 ## How to run
 
-To install our website on your local machine, you need to have Node.js and Git installed. You also need to clone our repository from GitHub:
+To install our website on your local machine, you need to have Node.js and Git installed.
 
+```bash
+# 1. Clone this repository to your local machine using
 git clone https://github.com/marikamulder/Medieval-Weaponry-Store.git
 
-Then, you need to install the dependencies:
-
+# 2. Navigate to the project folder
 cd Medieval-Weaponry-Store
 
+# 3. install the dependencies
 npm install
 
-Finally, you need to start the server:
-
+# 3. Finally, start the server
 npm start
+```
 
 You can then access our website at [http://localhost:3000](http://localhost:3000).
