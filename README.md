@@ -1,10 +1,10 @@
 ## Medieval Weaponry Store
-Welcome to the Medieval Weaponry Store, where you can find a variety of weapons from the Middle Ages. Whether you are looking for a axe, a bow, a dagger, a crossbow, or a mace, we have something for you. You can browse our catalog of items, read reviews from other customers, place your own review, add and remove items from your cart, and see the items in your cart.
+Welcome to my Medieval Weaponry Store, where you can find a variety of weapons from the Middle Ages. Whether you are looking for a axe, a bow, a dagger, a crossbow, or a mace, I have something for you. You can browse the catalog of items, read reviews from other customers, place your own review, add and remove items from your cart, and see the items in your cart.
 
 ## How to use
 
 - ### Browse items: 
-You can browse our items by category, axes, bows, daggers, and bundles.  You can see the name, price, items available, and the max ammount per person.
+You can browse the items by category, axes, bows, daggers, and bundles.  You can see the name, price, items available, and the max ammount per person.
 
 - ### Read reviews: 
 You can read reviews from other customers who have purchased or used an item.
@@ -20,7 +20,7 @@ You can see the items in your cart within the "Your Weaponry" section. You can s
 
 ## How to run
 
-To install our website on your local machine, you need to have Node.js and Git installed.
+To install the website on your local machine, you need to have Node.js and Git installed.
 
 ```bash
 # 1. Clone this repository to your local machine using
@@ -36,4 +36,4 @@ npm install
 npm start
 ```
 
-You can then access our website at [http://localhost:3000](http://localhost:3000).
+You can then access the website at [http://localhost:3000](http://localhost:3000).
